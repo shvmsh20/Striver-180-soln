@@ -87,3 +87,4 @@ void util(int col, vector<string> &board, vector<vector<string>> &res, vector<in
         util(0, board, res, leftRow, lowerDiag, upperDiag, n);
         return res;
     }
+ 
