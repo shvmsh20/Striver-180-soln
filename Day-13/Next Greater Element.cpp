@@ -1,3 +1,4 @@
+//NGE I
 vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
         unordered_map<int, int> mp;
         for(int i=0; i<nums2.size(); i++){
@@ -30,4 +31,25 @@ vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
         }
         return res;
         
+    }
+
+//NGE II
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n);
+        stack<int> st;
+        for(int i=2*n-1; i>=0; i--){
+            while(!st.empty() && st.top()<=nums[i%n]){
+                st.pop();
+            }
+            if(i<n){
+                if(!st.empty()){
+                    res[i] = st.top();
+                }else{
+                    res[i] = -1;
+                }
+            }
+            st.push(nums[i%n]);
+        }
+        return res;
     }
