@@ -1,3 +1,4 @@
+//Level Order
 vector<vector<int>> levelOrder(TreeNode* root) {
         queue<TreeNode*> q;
         q.push(root);
@@ -22,6 +23,46 @@ vector<vector<int>> levelOrder(TreeNode* root) {
         return res;
     }
 
+//Spiral level order using deque
+vector<int> findSpiral(Node *root)
+{
+    //Your code here
+    deque<Node*> dq;
+    vector<int> res;
+    if(root==NULL) return res;
+    dq.push_front(root);
+    bool rev = true;
+    while(!dq.empty()){
+        int n = dq.size();
+        for(int i=0; i<n; i++){
+            if(rev==false){
+                auto x = dq.front();
+                res.push_back(x->data);
+                if(x->left){
+                    dq.push_back(x->left);
+                }
+                if(x->right){
+                    dq.push_back(x->right);
+                }
+                dq.pop_front();
+            
+            }else{
+                auto x = dq.back();
+                res.push_back(x->data);
+                if(x->right){
+                    dq.push_front(x->right);
+                }
+                if(x->left){
+                    dq.push_front(x->left);
+                }
+                dq.pop_back();
+            }
+        }
+        
+        rev = !rev;
+    }
+    return res;
+}
 
 
 //Binary Tree Zigzag Level Order Traversal
