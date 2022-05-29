@@ -87,3 +87,20 @@ int lengthOfLIS(vector<int>& nums) {
         }
         return mx;
     }            
+
+//In nlogn
+int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp;
+        for(int i=0; i<n; i++){
+            if(dp.empty()){
+                dp.push_back(nums[i]);
+            }else if(nums[i]>dp.back()){
+                dp.push_back(nums[i]);
+            }else{
+                int index = lower_bound(dp.begin(), dp.end(), nums[i]) - dp.begin();
+                dp[index] = nums[i];
+            }
+        }
+        return dp.size();
+    }    
