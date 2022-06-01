@@ -85,4 +85,35 @@ bool canPartition(vector<int>& nums) {
             }
         }
         return dp[n][sum];
-    }        
+    } 
+
+//Space optimization
+bool canPartition(vector<int>& nums) {
+        int sum=0;
+        for(int x: nums){
+            sum+=x;
+        }
+        if(sum%2!=0){
+            return false;
+        }
+        int n = nums.size();
+        sum = sum/2;
+        vector<bool> prev(sum+1);
+        vector<bool> curr(sum+1);
+        for(int i=0; i<=sum; i++){
+            prev[i] = false;
+        }
+        prev[0] = true;
+        curr[0] = true;
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=sum; j++){
+                if(nums[i-1]<=j){
+                    curr[j] = prev[j-nums[i-1]] || prev[j];
+                }else{
+                    curr[j] = prev[j];
+                }
+            }
+            prev = curr;
+        }
+        return prev[sum];
+    }
