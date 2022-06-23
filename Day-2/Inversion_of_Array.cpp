@@ -1,3 +1,4 @@
+//T/C: O(n logn), S/C: O(n)
 long long merge(long long *arr, int lo, int mid, int hi){
     int n1 =  mid-lo+1, n2 = hi-mid;
     int a[n1];

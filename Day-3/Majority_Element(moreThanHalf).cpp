@@ -1,3 +1,4 @@
+//Moore's Voting Algo 
 int majorityElement(vector<int>& nums) {
         int maj=nums[0], count=1;
         for(int i=1; i<nums.size(); i++){
