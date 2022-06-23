@@ -11,7 +11,7 @@ int findDuplicate(vector<int>& nums) {
         }
         return curr;
     }
-    
+
 int findDuplicate(vector<int>& nums) {
         int fast = nums[0], slow = nums[0];
         //find collision point
@@ -28,3 +28,5 @@ int findDuplicate(vector<int>& nums) {
         }
         return slow;
     }
+
+    
