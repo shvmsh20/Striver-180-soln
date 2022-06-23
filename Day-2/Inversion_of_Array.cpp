@@ -50,3 +50,42 @@ long long getInversions(long long *arr, int n){
     return mergeSort(arr, lo, hi);
 
 }
+
+
+long long merge(long long *arr, vector<long long> &temp, int lo, int mid, int hi){
+   long long i=lo, j=mid+1, k=lo, count=0;
+    while(i<=mid && j<=hi){
+        if(arr[i]<=arr[j]){
+            temp[k++] = arr[i++];
+        }else{
+            count+= mid+1-i;
+            temp[k++] = arr[j++];
+        }
+    }
+    while(i<=mid){
+        temp[k++] = arr[i++];
+    }
+    while(j<=hi){
+        temp[k++] = arr[j++];
+    }
+    for(int i=lo; i<=hi; i++){
+        arr[i] = temp[i];
+    }
+    return count;
+}
+
+long long mergeSort(long long *arr, vector<long long> &temp, int l, int h){
+    if(h>l){
+        int mid = l+(h-l)/2;
+        int invCount = mergeSort(arr, temp, l, mid);
+        invCount+= mergeSort(arr, temp, mid+1, h);
+        invCount+= merge(arr, temp, l, mid, h);
+        return invCount;
+    }
+    return 0;
+}
+long long getInversions(long long *arr, int n){
+    // Write your code here.
+    vector<long long> temp(n);
+    return mergeSort(arr, temp, 0, n-1);
+}
