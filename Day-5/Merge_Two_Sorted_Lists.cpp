@@ -29,39 +29,54 @@ ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         return d->next;
     }
 //T/C: O(n+m) S/C: O(1)
-ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        if(l1==nullptr){
-            return l2;
-        }else if(l2==nullptr){
-            return l1;
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1==nullptr){
+            return list2;
+        }else if(list2==nullptr){
+            return list1;
         }
-        else{
-            ListNode* head=nullptr, *tail=nullptr;
-            if(l1->val<=l2->val){
-                head = l1;
-                tail=l1;
-                l1=l1->next;
+        ListNode* head, *tail;
+        ListNode* dummy = new ListNode(0), *curr;
+        curr = dummy;
+        while(list1 && list2){
+            if(list1->val<=list2->val){
+                curr->next = list1;
+                list1=list1->next;
+                curr=curr->next;
             }else{
-                head = l2;
-                tail=l2;
-                l2=l2->next;
+                curr->next = list2;
+                list2=list2->next;
+                curr=curr->next;
             }
-            while(l1!=nullptr && l2!=nullptr){
-                if(l1->val<=l2->val){
-                    tail->next = l1;
-                    tail = l1;
-                    l1=l1->next;
-                }else{
-                     tail->next = l2;
-                     tail = l2;
-                     l2=l2->next;
-                }
+        }
+        if(list1){
+            curr->next = list1;
+        }else if(list2){
+            curr->next = list2;
+        }
+        return dummy->next;
+    }
+
+    //OR
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1==nullptr){
+            return list2;
+        }else if(list2==nullptr){
+            return list1;
+        }
+        if(list1->val>list2->val){
+            swap(list1, list2);
+        }
+        ListNode* res = list1;
+        while(list1 && list2){
+            ListNode* temp = nullptr;
+            while(list1 && list1->val<=list2->val){
+                temp = list1;
+                list1= list1->next;
             }
-            if(l1==nullptr){
-                tail->next = l2;
-            }else{
-                tail->next= l1;
-            }
-            return head;
+            temp->next = list2;
+            swap(list1, list2);
+        }
+        return res;     
             
-        }
+    }    
