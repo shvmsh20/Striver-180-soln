@@ -1,4 +1,23 @@
 // Optimal
+int lengthOfLongestSubstring(string str) {
+        unordered_set<char> s;
+        int i=0, j=0, n=str.size();
+        int res=0;
+        while(j<n){
+            if(s.find(str[j])==s.end()){
+                res = max(res, j-i+1);
+                s.insert(str[j]);
+                j++;
+            }else{
+                while(i<j && s.find(str[j])!=s.end()){
+                    s.erase(str[i]);
+                    i++;
+                }
+            }
+        }
+        return res;
+    }
+    //OR
 int lengthOfLongestSubstring(string s) {
         unordered_set<char> st;
         int l=0, r=0, mx=0, curr=0;
