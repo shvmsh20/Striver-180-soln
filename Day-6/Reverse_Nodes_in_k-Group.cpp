@@ -1,4 +1,4 @@
-//When left-over nodes should be reversed
+//When left-over nodes should not be reversed
 ListNode* reverseKGroup(ListNode* head, int k) {
         if(head==nullptr || k==1){
             return head;
@@ -27,7 +27,41 @@ ListNode* reverseKGroup(ListNode* head, int k) {
         return dummy->next;
     }
 
-//When left-over nodes should not be reversed    
+    //OR
+int len(ListNode* curr){
+        int count=0;
+        while(curr){
+            curr=curr->next;
+            count++;
+        }
+        return count;
+    }
+    ListNode* util(ListNode* head, int k, int size){
+        if(head==nullptr || k==1 || k>size){
+            return head;
+        }
+        ListNode* curr, *t, *prev;
+        prev = nullptr;
+        curr = t = head;
+        int counter=1;
+        while(curr!=nullptr && counter<=k){
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            counter++;
+        }
+        t->next = util(curr, k, size-k);
+        return prev;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        int size = len(head);
+        return util(head, k, size);
+    }
+
+
+
+//When left-over nodes should be reversed    
 struct node *reverse (struct node *head, int k)
     { 
         // Complete this method
