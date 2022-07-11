@@ -1,3 +1,4 @@
+//T/C: O(2nlogk)
 struct Node{
     int val, idx, adx;
 };
