@@ -17,3 +17,26 @@ void sortStack(stack<int> &stack)
     }
     v.clear();
 }
+
+// insert also recursive
+void insertInSorted(int x, stack<int> &st){
+    if(st.empty() || st.top()<=x){
+        st.push(x);
+        return;
+    }
+    int t = st.top();
+    st.pop();
+    insertInSorted(x, st);
+    st.push(t);
+}
+void sortStack(stack<int> &st)
+{
+	// Write your code here
+    if(st.size()==1){
+        return;
+    }
+    int x = st.top();
+    st.pop();
+    sortStack(st);
+    insertInSorted(x, st);
+}
