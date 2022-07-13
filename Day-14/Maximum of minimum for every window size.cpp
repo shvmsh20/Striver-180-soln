@@ -1,32 +1,42 @@
-#include<bits/stdc++.h>
-vector<int> maxMinWindow(vector<int> a, int n) {
-	vector<int> v(n, INT_MIN);
-	int width[n];
-	stack<int> st;
-	for(int i=0; i<n; i++){
-		while(!st.empty() && a[st.top()]>=a[i]){
-			int index = st.top();
-			st.pop();
-			int l = st.empty()?-1:st.top();
-			width[index] = i-l-1;
-		}
-		st.push(i);
-	}
-	while(!st.empty()){
-		int index = st.top();
-		st.pop();
-		int l =  st.empty()?-1:st.top();
-		width[index] = n - l -1;
-	}
-	for(int i=0; i<n; i++){
-		
-		int range = width[i];
-		v[range-1] = max(v[range-1], a[i]);
-	}
-	for(int i=n-2; i>=0; i--){
-		
-			v[i] = max(v[i+1], v[i]);
-		
-	}
-	return v;
-}
+//gfg problem
+vector <int> maxOfMin(int arr[], int n)
+    {
+        // Your code here
+        stack<int> st;
+        vector<int> res(n, 0);
+        vector<int> range(n);
+        for(int i=0; i<n; i++){
+            while(!st.empty() && arr[st.top()]>arr[i]){
+                int index = st.top();
+                st.pop();
+                int width;
+                if(st.empty()){
+                    width = i;
+                }else{
+                    width = i-st.top()-1;
+                }
+                range[index] = width;
+            }
+            st.push(i);
+        }
+        while(!st.empty()){
+            int index = st.top();
+            st.pop();
+            int width;
+            if(st.empty()){
+                width = n;
+            }else{
+                width = n - st.top()-1;
+            }
+            range[index] = width;
+        }
+        
+        for(int i=0; i<n; i++){
+            int t = range[i]-1;
+            res[t] = max(res[t], arr[i]);
+        }
+        for(int i=n-2; i>=0; i--){
+            res[i] = max(res[i], res[i+1]);
+        }
+        return res;
+    }
