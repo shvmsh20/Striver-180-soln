@@ -47,3 +47,46 @@ int orangesRotting(vector<vector<int>>& grid) {
         
         return t-1;
     }
+
+    //OR
+    int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        queue<pair<int, int>> q;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]==2){
+                    q.push({i, j});
+                }
+            }
+        }
+        int time=0;
+        int dx[4] = {0, 1, 0, -1};
+        int dy[4] = {1, 0, -1, 0}; 
+        while(!q.empty()){
+            int sz = q.size();
+            for(int i=0; i<sz; i++){
+                int x = q.front().first;
+                int y = q.front().second;
+                q.pop();
+                for(int j=0; j<4; j++){
+                    int nx = dx[j]+x;
+                    int ny = dy[j]+y;
+                    if(nx>=0 && nx<n && ny>=0 && ny<m && grid[nx][ny]==1){
+                        grid[nx][ny] = 2;
+                        q.push({nx, ny});
+                    }
+                }
+            }
+            if(!q.empty()){
+                time++;
+            }
+        }
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]==1){
+                    return -1;
+                }
+            }
+        }
+        return time;
+    }
