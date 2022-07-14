@@ -44,3 +44,33 @@ string reverseWords(string s) {
         }
         return ans;
     } 
+
+
+//Diff Imp
+string reverseWords(string s) {
+        int i=0, j, n=s.size();
+        string ans;
+        string temp;
+        while(i<n){
+            while(i<n && s[i]==' '){
+                i++;
+            }
+            j=i+1;
+            while(j<n && s[j]!=' '){
+                j++;
+            }
+            if(i==n){
+                break;
+            }
+            temp = s.substr(i, j-i);
+            if(ans.empty()){
+                ans =temp;
+                temp="";
+            }else{
+                ans = temp+" "+ans;
+                temp="";
+            }
+            i=j+1;
+        }
+        return ans;
+    }    
