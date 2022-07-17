@@ -30,4 +30,27 @@ vector<int> preorderTraversal(TreeNode* root) {
             }
         }
         return v;
-    }    
+    } 
+
+    //OR
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(root==nullptr){
+            return res;
+        }
+        stack<TreeNode* > st;
+        st.push(root);
+        TreeNode *curr;
+        while(!st.empty()){
+            curr = st.top();
+            st.pop();
+            res.push_back(curr->val);
+            if(curr->right){
+                st.push(curr->right);
+            }
+            if(curr->left){
+                st.push(curr->left);
+            }
+        }
+        return res;
+    }   
