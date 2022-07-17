@@ -14,7 +14,7 @@ vector<int> zFun(string &s){
             r--;
         }else{
             int k1 = k-l;
-            if(z[k1]<r-k+1){
+            if(k+z[k1]<=r){
                 z[k] = z[k1];
             }else{
                 l=k;
