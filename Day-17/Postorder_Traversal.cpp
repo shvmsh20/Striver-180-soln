@@ -41,3 +41,31 @@ vector<int> postorderTraversal(TreeNode* root) {
         return v;
         
     }
+    
+    //Using 1 stack
+    vector<int> postorderTraversal(TreeNode* root) {
+        TreeNode* curr = root;
+        stack<TreeNode* > st;
+        vector<int> res;
+        while(!st.empty() || curr){
+            if(curr){
+                st.push(curr);
+                curr = curr->left;
+            }else{
+                TreeNode *temp = st.top()->right;
+                if(temp==nullptr){
+                    temp = st.top();
+                    st.pop();
+                    res.push_back(temp->val);
+                    while(!st.empty() && temp==st.top()->right){
+                        temp = st.top();
+                        st.pop();
+                        res.push_back(temp->val);
+                    }
+                }else{
+                    curr = temp;
+                }
+            }
+        }
+        return res;
+    }
