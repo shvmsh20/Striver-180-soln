@@ -39,7 +39,7 @@ int kthSmallest(TreeNode* root, int k) {
     }
 
 //M-3
-
+//Morris traversal
 int kthSmallest(TreeNode* root, int k) {
         int res = -1;
         while(root!=nullptr){

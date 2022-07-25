@@ -23,3 +23,39 @@ vector<int> solve(TreeNode* root, int &res){
         solve(root, res);
         return res<0?0:res;
     }
+//OR
+struct Node{
+        int sum;
+        int mn;
+        int mx;
+        Node(int s, int x, int y){
+            sum = s;
+            mn = x;
+            mx = y;
+        }
+    };
+    Node* util(TreeNode* root){
+        if(root==nullptr){
+            return new Node(0, INT_MAX, INT_MIN);
+        }
+        // if(root->left==nullptr && root->right==nullptr){
+        //     Node* t = new Node(root->val, root->val, root->val);
+        //     return t;
+        // }
+        Node* l = util(root->left);
+        Node* r = util(root->right);
+        if(l->mx<root->val && root->val<r->mn){
+            int currSum = (l->sum)+(r->sum)+(root->val);
+            int currMn = min(l->mn, root->val);
+            int currMx = max(r->mx, root->val);
+            Node* t = new Node(currSum, currMn, currMx);
+            return t;
+        }else{
+            Node* t = new Node(max(l->sum, r->sum), INT_MIN, INT_MAX);
+            return t;
+        }
+    }
+    int maxSumBST(TreeNode* root) {
+        Node* t = util(root);
+        return max(0, t->sum);
+    }    
