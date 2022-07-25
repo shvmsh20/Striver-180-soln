@@ -24,7 +24,8 @@ vector<int> solve(TreeNode* root, int &res){
         return res<0?0:res;
     }
 //OR
-struct Node{
+int res = INT_MIN;
+    struct Node{
         int sum;
         int mn;
         int mx;
@@ -38,14 +39,12 @@ struct Node{
         if(root==nullptr){
             return new Node(0, INT_MAX, INT_MIN);
         }
-        // if(root->left==nullptr && root->right==nullptr){
-        //     Node* t = new Node(root->val, root->val, root->val);
-        //     return t;
-        // }
+       
         Node* l = util(root->left);
         Node* r = util(root->right);
         if(l->mx<root->val && root->val<r->mn){
             int currSum = (l->sum)+(r->sum)+(root->val);
+            res = max(res, currSum);
             int currMn = min(l->mn, root->val);
             int currMx = max(r->mx, root->val);
             Node* t = new Node(currSum, currMn, currMx);
@@ -57,5 +56,5 @@ struct Node{
     }
     int maxSumBST(TreeNode* root) {
         Node* t = util(root);
-        return max(0, t->sum);
-    }    
+        return max(0, res);
+    }
