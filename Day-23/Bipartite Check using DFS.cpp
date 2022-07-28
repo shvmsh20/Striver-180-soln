@@ -15,6 +15,7 @@ bool dfs(int u, vector<vector<int>> &adj, vector<int> &color){
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
         vector<vector<int>> adj(n);
+        //no need to make adj list
         for(int i=0; i<n; i++){
             for(int x: graph[i]){
                 adj[i].push_back(x);

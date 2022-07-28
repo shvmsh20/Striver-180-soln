@@ -72,7 +72,7 @@ int lengthOfLIS(vector<int>& nums) {
 
 
 
-//Simple Approach
+//Simple Approach O(n)
 int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         vector<int> dp(n, 1);
