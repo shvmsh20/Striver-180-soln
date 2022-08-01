@@ -49,7 +49,7 @@ int minCost(int n, vector<int>& cuts) {
         cuts.push_back(n);
         sort(cuts.begin(), cuts.end());
         int size = cuts.size()-2;
-        vector<vector<int>> dp(size+2, vector<int> (size+2, -0));
+        vector<vector<int>> dp(size+2, vector<int> (size+2, 0));
         for(int i=size; i>=1; i--){
             for(int j=1; j<=size; j++){
                 if(i>j){
