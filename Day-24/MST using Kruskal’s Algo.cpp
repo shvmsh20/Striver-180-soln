@@ -1,3 +1,4 @@
+//T/C: O(ElogE + E*4*alpha)
 struct Node{
 	    int u, v, wt;
 	    Node(int x, int y, int z){
@@ -6,18 +7,17 @@ struct Node{
 	        wt = z;
 	    }
 	};
-	
-	static bool cmp(Node *n1, Node*n2){
-	    return n1->wt<n2->wt;
-	}
-	
+	struct cmp{
+	    bool operator()(Node a, Node b){
+	        return a.wt>b.wt;
+	    }
+	};
 	int find(int a, vector<int> &parent){
 	    if(parent[a]==a){
 	        return a;
 	    }
 	    return parent[a] = find(parent[a], parent);
 	}
-	
 	void Union(int a, int b, vector<int> &parent, vector<int> &size){
 	    a = find(a, parent);
 	    b = find(b, parent);
@@ -25,37 +25,40 @@ struct Node{
 	        swap(a, b);
 	    }
 	    parent[b] = a;
-	    size[a]+= size[b];
+	    size[a]+=size[b];
 	}
-	
     int spanningTree(int V, vector<vector<int>> adj[])
     {
         // code here
-        vector<Node*> ed;
-        for(int i=0; i<V; i++){
-            for(auto x: adj[i]){
-                Node *node = new Node(i, x[0], x[1]);
-                ed.push_back(node);
-            }
+        //OR can use an array and later sort it
+        priority_queue<Node, vector<Node>, cmp> pq;
+        for(int u=0; u<V; u++)
+        for(auto x: adj[u]){
+            int v = x[0];
+            int wt = x[1];
+            Node node(u, v, wt);
+            pq.push(node);
         }
-        sort(ed.begin(), ed.end(), cmp);
-        int cost=0;
         vector<int> parent(V);
         vector<int> size(V);
         for(int i=0; i<V; i++){
-            parent[i] = i;
             size[i] = 1;
+            parent[i] = i;
         }
-        for(auto it: ed){
-            int u = it->u;
-            int v = it->v;
-            int wt = it->wt;
-            int a = find(u, parent);
-            int b = find(v, parent);
-            if(a!=b){
+        int cost=0;
+        while(!pq.empty()){
+            auto node = pq.top();
+            pq.pop();
+            int u = node.u;
+            int v = node.v;
+            int wt = node.wt;
+            int p1 = find(u, parent);
+            int p2 = find(v, parent);
+            if(p1!=p2){
                 cost+= wt;
-                Union(a, b, parent, size);
+                Union(u, v, parent, size);
             }
         }
         return cost;
+        
     }
